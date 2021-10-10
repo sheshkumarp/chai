@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="24px" viewBox="0 0 20 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Teleconferences</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-43.000000, -375.000000)" fill="#1FAB5B" id="Nav">
+            <g transform="translate(-6.000000, 0.000000)">
+                <g id="Nav---Active-Links-and-Icons" transform="translate(0.000000, 80.000000)">
+                    <g id="Active-Teleconferences" transform="translate(0.000000, 272.000000)">
+                        <path d="M68,37 C68,37.553 67.553,38 67,38 L66,38 L66,34 L67,34 C67.553,34 68,34.447 68,35 L68,37 Z M59,46 C58.447,46 58,45.553 58,45 C58,44.447 58.447,44 59,44 C59.553,44 60,44.447 60,45 C60,45.553 59.553,46 59,46 Z M52,38 L51,38 C50.447,38 50,37.553 50,37 L50,35 C50,34.447 50.447,34 51,34 L52,34 L52,38 Z M67,33 L67,31 C67,26.582 63.418,23 59,23 C54.582,23 51,26.582 51,31 L51,33 C49.896,33 49,33.896 49,35 L49,37 C49,38.104 49.896,39 51,39 L53,39 L53,31 C53,27.687 55.687,25 59,25 C62.313,25 65,27.687 65,31 L65,39 L65.922,39 C65.529,41.73 63.564,43.943 60.97,44.703 C60.826,43.74 60.003,43 59,43 C57.896,43 57,43.896 57,45 C57,46.104 57.896,47 59,47 C59.83,47 60.541,46.494 60.844,45.774 C64.055,45.015 66.514,42.328 66.931,39 L67,39 C68.104,39 69,38.104 69,37 L69,35 C69,33.896 68.104,33 67,33 Z" id="Teleconferences"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
