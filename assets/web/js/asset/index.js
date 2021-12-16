@@ -1,5 +1,7 @@
 $(document).ready(function () 
 {
+  //alert('pass');
+
   var action = BASEURL + '/asset/getRecords';
 
   const table = $('#listingTable').DataTable(
@@ -15,10 +17,11 @@ $(document).ready(function ()
         "url": action,
         "data": function (object) {
           object.custom = {
+            "id": $('#id').val(),
             "team": $('#team').val(),
             "asset_type": $('#asset_type').val(),
-            "fa_type": $('#fa_type').val(),
             "equipment_description": $('#equipment_description').val(),
+            "invoice": $('#invoice').val(),
           }
         }
       },
@@ -94,10 +97,11 @@ function doSearch(element) {
 
 function removeSearch(element) {
 
+  $('#id').val('');
   $('#team').val('');
   $('#asset_type').val('');
-  $('#fa_type').val('');
   $('#equipment_description').val('');
+  $('#invoice').val('');
   $('#listingTable').DataTable().draw();
 }
 

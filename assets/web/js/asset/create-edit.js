@@ -150,3 +150,38 @@ $(document).on('click', '.remove_image', function()
     });
 
 });
+
+function getUsd(element)
+{
+
+    var currency = $(element).val();
+
+    $('.err_acquisition_cost_local').closest('div').removeClass('has-error has-danger');
+    $('.err_acquisition_cost_local').html('');
+
+
+    if (isNaN(currency)) 
+    {
+        $('.err_acquisition_cost_local').closest('div').addClass('has-error has-danger');
+        $('.err_acquisition_cost_local').html('Please enter valid number');
+    }
+    else
+    {
+
+        let token = $('meta[name="csrf-token"]').attr('content');
+        let MONEYCONVERTURL = `${BASEURL}/convertmoney`;
+
+        $.ajax({
+            url : MONEYCONVERTURL,
+            type: "POST",
+            data : {currency : currency, _token : token },
+            success : function(data)
+            {   
+                $("#acquisition_cost_usd").val(data.output)
+            }
+        });
+
+
+
+    }
+}

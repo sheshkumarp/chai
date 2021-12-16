@@ -34,7 +34,7 @@
                 style="width:100%">
                 <thead>
                     <tr>
-                        <th style="text-align:center;">Sr.no</th>
+                        <th style="text-align:center;">Asset Code</th>
                         <th style="text-align:center;">Team</th>
                         <th style="text-align:center;">Asset Type</th>
                         <th style="text-align:center;">Equipment Description</th>

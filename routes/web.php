@@ -152,8 +152,13 @@
             Route::get('/asset/getRecords', 'AssetController@getRecords')->name($PREFIX.'.asset.getRecords'); 
             Route::resource('asset', 'AssetController', ['as' => $PREFIX]);
 
+            // Convertmoney
+            Route::post('/convertmoney',  'DashboardController@convertmoney')->name($PREFIX.'.convertmoney');
+
             // Dashboard
             Route::get('/',  'DashboardController@index')->name($PREFIX.'.dashboard');
+
+
         });        
          
     });

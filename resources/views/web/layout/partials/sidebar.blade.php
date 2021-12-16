@@ -1,6 +1,11 @@
 <div class="panel-group" id="accordion">
 
       <div class="panel panel-default">
+            <img style="width: 250px;padding-top: 20px;margin-left: 37px;height: 156px;" src="{{ asset('assets/admin/images/CHAI-Logo.png') }}" >                 
+      </div>
+      <hr>
+
+      <div class="panel panel-default">
             <div class="panel-heading {{ active(['/']) }}">
                   <a href="{{ route('web.dashboard') }}" class="d-flex align-items-center hover-img">
                         <h4 class="panel-title w-100">

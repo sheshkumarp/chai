@@ -5,6 +5,7 @@
 @endsection
 
 @section('styles')
+    <link href="{{ asset('/') }}assets/plugins/gallary/dist/magnific-popup.css" rel="stylesheet">
     <link href="{{ asset('/') }}assets/plugins/dropzone/dist/dropzonenew.css" rel="stylesheet">
     <style>
         .dropzoneDragArea { background-color: #fbfdff; border: 1px dashed #c0ccda; border-radius: 6px; padding: 60px; text-align: center; margin-bottom: 15px; cursor: pointer; }
@@ -128,7 +129,7 @@
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">Acquisition Cost Local</label>
-                            <input class="form-control" type="text" name="acquisition_cost_local" value="{{ $object->acquisition_cost_local }}">
+                            <input class="form-control" oninput="getUsd(this)" type="text" name="acquisition_cost_local" value="{{ $object->acquisition_cost_local }}">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
                                     <li class="err_acquisition_cost_local"></li>
@@ -138,7 +139,7 @@
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">Acquisition Cost USD</label>
-                            <input class="form-control" type="text" name="acquisition_cost_usd" value="{{ $object->acquisition_cost_usd }}">
+                            <input class="form-control" type="text" name="acquisition_cost_usd" id="acquisition_cost_usd" value="{{ $object->acquisition_cost_usd }}">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
                                     <li class="err_acquisition_cost_usd"></li>
@@ -285,7 +286,7 @@
                     <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Model</label>
+                            <label class="theme-blue">Asset Location</label>
                             <input class="form-control" type="text" name="model" value="{{ $object->model }}">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
@@ -295,7 +296,7 @@
                         </div>
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Serial/Vehicle/Identification/Logbook </label>
+                            <label class="theme-blue">Shift to </label>
                             <input class="form-control" type="text" name="serial_vehicle_identification_logbook" value="{{ $object->serial_vehicle_identification_logbook }}">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
@@ -397,11 +398,21 @@
 @endsection
 
 @section('scripts')
+        
     <script>
         const UPLOADFILE = "{{ route($moduleUploadFiles) }}";
         const REMOVEFILE = "{{ route($moduleRemoveFiles) }}";
         const MEDIAFILE  = "{{ route($moduleMediaFiles) }}";
     </script>
+    
+
     <script type="text/javascript" src="{{ url('assets/plugins/dropzone/dist/dropzone.js') }}"></script>
     <script type="text/javascript" src="{{ url('assets/web/js/asset/create-edit.js') }}"></script>
+
+    <script type="text/javascript" src="{{ url('assets/plugins/gallary/dist/jquery.magnific-popup.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#dropzone-previews').magnificPopup({ delegate: 'a', type: 'image' });
+        });
+    </script>
 @endsection

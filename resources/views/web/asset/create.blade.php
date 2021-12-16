@@ -118,7 +118,7 @@
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">Acquisition Cost Local</label>
-                            <input class="form-control" type="text" name="acquisition_cost_local">
+                            <input oninput="getUsd(this)" class="form-control" type="text" name="acquisition_cost_local">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
                                     <li class="err_acquisition_cost_local"></li>
@@ -128,7 +128,7 @@
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">Acquisition Cost USD</label>
-                            <input class="form-control" type="text" name="acquisition_cost_usd">
+                            <input class="form-control" type="text" id="acquisition_cost_usd" name="acquisition_cost_usd">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
                                     <li class="err_acquisition_cost_usd"></li>
@@ -265,7 +265,7 @@
                     <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Model</label>
+                            <label class="theme-blue">Asset Location</label>
                             <input class="form-control" type="text" name="model">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
@@ -275,7 +275,7 @@
                         </div>
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Serial/Vehicle/Identification/Logbook </label>
+                            <label class="theme-blue">Shift to </label>
                             <input class="form-control" type="text" name="serial_vehicle_identification_logbook">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
@@ -380,4 +380,11 @@
     </script>
     <script type="text/javascript" src="{{ url('assets/plugins/dropzone/dist/dropzone.js') }}"></script>
     <script type="text/javascript" src="{{ url('assets/web/js/asset/create-edit.js') }}"></script>
+
+    <script type="text/javascript" src="{{ url('assets/plugins/gallary/dist/jquery.magnific-popup.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#dropzone-previews').magnificPopup({ delegate: 'a', type: 'image' });
+        });
+    </script>
 @endsection

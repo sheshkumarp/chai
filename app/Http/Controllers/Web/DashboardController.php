@@ -14,6 +14,10 @@ use \Carbon\Carbon;
 
 use Validator;
 
+// use AmrShawky\LaravelCurrency\Facade\Currency;
+use AmrShawky\Currency;
+
+
 // use Spatie\Permission\Models\Role;
 // use Spatie\Permission\Models\Permission;
         
@@ -47,6 +51,25 @@ class DashboardController extends Controller
         
         // self::_getAuthenticationForToken();
         return view($this->ModuleView.'index', $this->ViewData);
+    }
+
+
+    public function convertmoney(Request $request)
+    {
+        // dd($request->all());
+
+        $amount = $request->currency;
+
+
+        $converted = Currency::convert()
+                            ->from('CDF')
+                            ->to('USD')
+                            ->amount($amount)
+                            ->round(2)
+                            ->get();
+        
+
+        return response()->json(['output' => $converted]);
     }
     
 }

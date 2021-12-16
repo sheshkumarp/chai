@@ -4,8 +4,127 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6199b4319c8def3bc2cd65d7d71e1832",
+    "content-hash": "561cd22fde10bd208b1ddc373e7a63b5",
     "packages": [
+        {
+            "name": "amrshawky/currency",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amrshawky/currency.git",
+                "reference": "39f13b6783ef611fd13916d48abd31bca2ab1e54"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amrshawky/currency/zipball/39f13b6783ef611fd13916d48abd31bca2ab1e54",
+                "reference": "39f13b6783ef611fd13916d48abd31bca2ab1e54",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": ">=6.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AmrShawky\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Amr Shawky",
+                    "homepage": "https://amrshawky.com"
+                }
+            ],
+            "description": "A PHP library for current and historical currency exchange rates & crypto exchange rates based on the free API provided by exchangerate.host",
+            "keywords": [
+                "crypto exchange rates",
+                "currency",
+                "currency converter",
+                "exchange rates",
+                "php"
+            ],
+            "funding": [
+                {
+                    "url": "https://ko-fi.com/amrshawky",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2021-05-13T23:41:33+00:00"
+        },
+        {
+            "name": "amrshawky/laravel-currency",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amrshawky/laravel-currency.git",
+                "reference": "ce9444bac85fe0cbdd4b2e9131d6a9d2bfdefbf1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amrshawky/laravel-currency/zipball/ce9444bac85fe0cbdd4b2e9131d6a9d2bfdefbf1",
+                "reference": "ce9444bac85fe0cbdd4b2e9131d6a9d2bfdefbf1",
+                "shasum": ""
+            },
+            "require": {
+                "amrshawky/currency": "^1.0",
+                "ext-json": "*",
+                "guzzlehttp/guzzle": ">=6.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AmrShawky\\LaravelCurrency\\CurrencyServiceProvider"
+                    ],
+                    "aliases": {
+                        "Currency": "AmrShawky\\LaravelCurrency\\Facade\\Currency"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AmrShawky\\LaravelCurrency\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Amr Shawky",
+                    "homepage": "https://amrshawky.com"
+                }
+            ],
+            "description": "A Laravel package for current and historical currency exchange rates & crypto exchange rates based on the free API provided by exchangerate.host",
+            "keywords": [
+                "currency",
+                "currency converter",
+                "exchange rates",
+                "laravel"
+            ],
+            "funding": [
+                {
+                    "url": "https://ko-fi.com/amrshawky",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2021-05-15T01:12:59+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.0.3",
@@ -1546,6 +1665,76 @@
             "time": "2021-09-25T08:23:19+00:00"
         },
         {
+            "name": "milon/barcode",
+            "version": "8.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/milon/barcode.git",
+                "reference": "a1b1ee1a743c1368597f1742e6ee4765333a15a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/milon/barcode/zipball/a1b1ee1a743c1368597f1742e6ee4765333a15a1",
+                "reference": "a1b1ee1a743c1368597f1742e6ee4765333a15a1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0",
+                "php": "^7.3 | ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Milon\\Barcode\\BarcodeServiceProvider"
+                    ],
+                    "aliases": {
+                        "DNS1D": "Milon\\Barcode\\Facades\\DNS1DFacade",
+                        "DNS2D": "Milon\\Barcode\\Facades\\DNS2DFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Milon\\Barcode": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Nuruzzaman Milon",
+                    "email": "contact@milon.im"
+                }
+            ],
+            "description": "Barcode generator like Qr Code, PDF417, C39, C39+, C39E, C39E+, C93, S25, S25+, I25, I25+, C128, C128A, C128B, C128C, 2-Digits UPC-Based Extention, 5-Digits UPC-Based Extention, EAN 8, EAN 13, UPC-A, UPC-E, MSI (Variation of Plessey code)",
+            "keywords": [
+                "CODABAR",
+                "CODE 128",
+                "CODE 39",
+                "barcode",
+                "datamatrix",
+                "ean",
+                "laravel",
+                "pdf417",
+                "qr code",
+                "qrcode"
+            ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/tomilon",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/milon",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-01-08T11:36:07+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "2.3.4",
             "source": {
@@ -2730,6 +2919,7 @@
                     "type": "tidelift"
                 }
             ],
+            "abandoned": "symfony/mailer",
             "time": "2021-03-09T12:30:35+00:00"
         },
         {

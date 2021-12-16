@@ -42,7 +42,7 @@
 
 <body>
     <header class="sticky">
-        <nav class="navbar navbar-default px-25 border-0 border-radius-0 bg-white shadow mb-0">
+        <nav style="height:70px" class="navbar navbar-default px-25 border-0 border-radius-0 bg-white shadow mb-0">
             <div class="container-fluid d-md-flex">
                 <div class="navbar-header align-self-center">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -50,13 +50,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                   <!--  <a class="navbar-brand theme-green" href="{{ URL::to('/admin') }}">KAB<span
-                            class="theme-black">EGO</span> <span class="theme-black text-uppercase admin-text">admin
-                            panel</span></a> -->
-
-                    <a class="navbar-brand theme-green" href="{{ URL::to('/admin') }}">
-                        <img style="width: 125px;padding: 10px;margin-left: 35px" src="{{ asset('assets/admin/images/CHAI-Logo.png') }}" >     
-                    </a>
+                    <a style="padding: 20px;" class="navbar-brand theme-green" href="{{ URL::to('/admin') }}">Admin<span
+                            class="theme-black">Panel</span> <span class="theme-black text-uppercase admin-text"></span></a>
                 </div>
                 <div class="collapse navbar-collapse ml-auto" id="myNavbar">
 

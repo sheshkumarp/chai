@@ -50,9 +50,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand theme-green" href="{{ URL::to('/') }}">
-                        <img style="width: 125px;padding: 10px;margin-left: 35px" src="{{ asset('assets/admin/images/CHAI-Logo.png') }}" >     
-                    </a>
+                    <a style="padding: 20px;" class="navbar-brand theme-green" href="{{ URL::to('/admin') }}">User<span
+                            class="theme-black">Panel</span> <span class="theme-black text-uppercase admin-text"></span></a>
                 </div>
                 <div class="collapse navbar-collapse ml-auto" id="myNavbar">
 

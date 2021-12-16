@@ -205,12 +205,12 @@
                     <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Model</label>: 
+                            <label class="theme-blue">Asset Location</label>: 
                             <span style="font-weight: bold; font-size: 16px;">  {{ !empty($object->model) ?  $object->model : '---' }} </span>
                         </div>
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Serial/Vehicle/Identification/Logbook </label>:  
+                            <label class="theme-blue">Shift to </label>:  
                             <span style="font-weight: bold; font-size: 16px;">  {{ !empty($object->serial_vehicle_identification_logbook) ?  $object->serial_vehicle_identification_logbook : '---'  }} </span>
                         </div>
                     </div>

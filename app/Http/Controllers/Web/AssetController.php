@@ -274,6 +274,14 @@ class AssetController extends Controller
         $totalFiltered = $totalData;
         if (!empty($request->custom)) 
         {
+            if (!empty($request->custom['id'])) 
+            {
+                $key = $request->custom['id'];
+                $custom_search = true;
+                $modelQuery = $modelQuery
+                ->where('id', 'LIKE', '%' . $key . '%');
+            }
+
             if (!empty($request->custom['team'])) 
             {
                 $key = $request->custom['team'];
@@ -322,7 +330,7 @@ class AssetController extends Controller
         $object = $modelQuery
         ->skip($start)
         ->take($length)
-        ->groupBy('user_has_assets.id')
+        //->groupBy('user_has_assets.id')
         ->get();
 
 
@@ -337,7 +345,7 @@ class AssetController extends Controller
             $i = 1;
             foreach ($object as $key => $row) 
             {
-                $data[$key]['id'] = $i; $i++;
+                $data[$key]['id'] = $row->id;
 
                 $data[$key]['team'] = '<span title="' . ucfirst($row->team->title) . '">' . ucfirst($row->team->title). '</span>';
 
@@ -356,7 +364,7 @@ class AssetController extends Controller
             }
         }
 
-        $searchHTML['id'] = '';
+        $searchHTML['id'] = '<input  name="id" id="id" value="' . ($request->custom['id'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
 
         $searchHTML['team'] = '<input  name="team" id="team" value="' . ($request->custom['team'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
 
@@ -533,7 +541,11 @@ class AssetController extends Controller
             foreach($medias as $img)
             {
                 $output .= '
-                    <div class="col-md-2" style="margin-bottom:16px;" align="center"> <img src="'.Storage::disk('public')->url($img->thumb).'" class="img-thumbnail" width="200" height="200" /><button type="button" class="btn btn-link remove_image" id="'.base64_encode(base64_encode($img->id)).'">Remove</button></div>';
+                    <div class="col-md-2" style="margin-bottom:16px;" align="center"> 
+                    <a href="'.Storage::disk('public')->url($img->image).'" >
+                        <img src="'.Storage::disk('public')->url($img->thumb).'" class="img-thumbnail" width="200" height="200" />
+                    </a>
+                    <button type="button" class="btn btn-link remove_image" id="'.base64_encode(base64_encode($img->id)).'">Remove</button></div>';
             }
 
             $output .= '</div>';
