@@ -153,12 +153,10 @@ $(document).on('click', '.remove_image', function()
 
 function getUsd(element)
 {
-
-    var currency = $(element).val();
+    var currency = parseFloat($(element).val());
 
     $('.err_acquisition_cost_local').closest('div').removeClass('has-error has-danger');
     $('.err_acquisition_cost_local').html('');
-
 
     if (isNaN(currency)) 
     {
@@ -168,20 +166,45 @@ function getUsd(element)
     else
     {
 
-        let token = $('meta[name="csrf-token"]').attr('content');
-        let MONEYCONVERTURL = `${BASEURL}/convertmoney`;
+        var requestURL = 'https://api.exchangerate-api.com/v4/latest/USD';
+        var request = new XMLHttpRequest();
+        request.open('GET', requestURL);
+        request.responseType = 'json';
+        request.send();
 
-        $.ajax({
-            url : MONEYCONVERTURL,
-            type: "POST",
-            data : {currency : currency, _token : token },
-            success : function(data)
-            {   
-                $("#acquisition_cost_usd").val(data.output)
-            }
-        });
+        request.onload = function() {
 
+            let cdf = request.response.rates.CDF;
 
+            let converted = currency/cdf;
+            // console.log(converted);
 
+            $("#acquisition_cost_usd").val((converted).toFixed(2));     
+        }
     }
+
+    // $('.err_acquisition_cost_local').closest('div').removeClass('has-error has-danger');
+    // $('.err_acquisition_cost_local').html('');
+
+    // if (isNaN(currency)) 
+    // {
+    //     $('.err_acquisition_cost_local').closest('div').addClass('has-error has-danger');
+    //     $('.err_acquisition_cost_local').html('Please enter valid number');
+    // }
+    // else
+    // {
+
+    //     let token = $('meta[name="csrf-token"]').attr('content');
+    //     let MONEYCONVERTURL = `${BASEURL}/convertmoney`;
+
+    //     $.ajax({
+    //         url : MONEYCONVERTURL,
+    //         type: "POST",
+    //         data : {currency : currency, _token : token },
+    //         success : function(data)
+    //         {   
+    //             $("#acquisition_cost_usd").val(data.output)
+    //         }
+    //     });
+    // }
 }

@@ -69,7 +69,7 @@
                                 </ul>
                             </span>
                         </div>
-                        <div class="f-col-6 form-group">
+                        <!-- <div class="f-col-6 form-group">
                             <label class="theme-blue">Code Bar ID</label>
                             <input class="form-control" type="text" name="code_bar_id">
                             <span class="help-block with-errors">
@@ -77,7 +77,7 @@
                                     <li class="err_code_bar_id"></li>
                                 </ul>
                             </span>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="d-flex flex-column mb-25 form-group">
@@ -265,7 +265,7 @@
                     <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Asset Location</label>
+                            <label class="theme-blue">Model</label>
                             <input class="form-control" type="text" name="model">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
@@ -275,7 +275,7 @@
                         </div>
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Shift to </label>
+                            <label class="theme-blue">Serial/Vehicle/Identification/Logbook</label>
                             <input class="form-control" type="text" name="serial_vehicle_identification_logbook">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">

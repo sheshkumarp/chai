@@ -12,6 +12,7 @@ use App\Models\AssetHasImagesModel;
 use App\Models\TeamModel;
 use App\Models\CategoryModel;
 use App\Models\AssetTypesModel;
+use App\Models\UserHasMovementHistoryModel;
 use App\User as UserModel;
 
 use Illuminate\Support\Str;
@@ -21,6 +22,7 @@ use DB;
 use Hash;
 use Storage;
 use Image;
+use DNS1D;
 
 
 class AssetController extends Controller
@@ -39,7 +41,8 @@ class AssetController extends Controller
         TeamModel $TeamModel,
         CategoryModel $CategoryModel,
         AssetTypesModel $AssetTypesModel,
-        AssetHasImagesModel $AssetHasImagesModel
+        AssetHasImagesModel $AssetHasImagesModel,
+        UserHasMovementHistoryModel $UserHasMovementHistoryModel
 
     ) {
 
@@ -49,6 +52,7 @@ class AssetController extends Controller
         $this->CategoryModel = $CategoryModel;
         $this->AssetTypesModel = $AssetTypesModel;
         $this->AssetHasImagesModel = $AssetHasImagesModel;
+        $this->UserHasMovementHistoryModel = $UserHasMovementHistoryModel;
 
         $this->ViewData = [];
         $this->JsonData = [];
@@ -186,6 +190,17 @@ class AssetController extends Controller
 
         $collection = $this->BaseModel->find($id);
 
+        // check movement history
+        if ($collection->in_country_location != $request->in_country_location) {
+            
+            $UserHasMovementHistoryModel = new $this->UserHasMovementHistoryModel;
+            $UserHasMovementHistoryModel->fk_user_id    = auth()->user()->id;
+            $UserHasMovementHistoryModel->fk_asset_id   = $id;
+            $UserHasMovementHistoryModel->moved_from    = $collection->in_country_location ?? 'NA';
+            $UserHasMovementHistoryModel->moved_to      = $request->in_country_location ?? 'NA';
+            $UserHasMovementHistoryModel->save();
+        }
+
         try 
         {
             $collection = self::_storeOrUpdate($collection, $request);
@@ -262,7 +277,7 @@ class AssetController extends Controller
         );
 
       
-        $modelQuery = $this->BaseModel->with(['category','team']);
+        $modelQuery = $this->BaseModel->where('fk_user_id', auth()->user()->id)->with(['category','team']);
 
       
         $countQuery = clone($modelQuery);   
@@ -345,7 +360,7 @@ class AssetController extends Controller
             $i = 1;
             foreach ($object as $key => $row) 
             {
-                $data[$key]['id'] = $row->id;
+                $data[$key]['id'] = '<a href="data:image/png;base64,'.DNS1D::getBarcodePNG($row->id, 'C39',3,33).'" target="_blank" download ><img src="data:image/png;base64,' . DNS1D::getBarcodePNG($row->id, 'C39',3,33) . '" alt="barcode" /></a>';
 
                 $data[$key]['team'] = '<span title="' . ucfirst($row->team->title) . '">' . ucfirst($row->team->title). '</span>';
 
@@ -364,7 +379,8 @@ class AssetController extends Controller
             }
         }
 
-        $searchHTML['id'] = '<input  name="id" id="id" value="' . ($request->custom['id'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
+        // $searchHTML['id'] = '<input  name="id" id="id" value="' . ($request->custom['id'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
+        $searchHTML['id'] = '';
 
         $searchHTML['team'] = '<input  name="team" id="team" value="' . ($request->custom['team'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
 
@@ -397,6 +413,7 @@ class AssetController extends Controller
 
     public function _storeOrUpdate($collection, $request)
     {
+
         $collection->fk_user_id             = auth()->user()->id;
         $collection->fk_team_id             = $request->fk_team_id;
         $collection->fa_type                = $request->fa_type ?? '';

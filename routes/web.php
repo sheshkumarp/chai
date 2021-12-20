@@ -49,6 +49,7 @@
             Route::group(array('prefix' => 'dashboard'),function() use($PREFIX)
             {
                 Route::get('/',  'DashboardController@index')->name($PREFIX.'.dashboard');
+                Route::get('/getMovementRecords',  'DashboardController@getMovementRecords')->name($PREFIX.'.getMovementRecords');
             });
 
             // Category
@@ -157,6 +158,7 @@
 
             // Dashboard
             Route::get('/',  'DashboardController@index')->name($PREFIX.'.dashboard');
+            Route::get('/dashboard/getMovementRecords',  'DashboardController@getMovementRecords')->name($PREFIX.'.dashboard.getMovementRecords');
 
 
         });        
