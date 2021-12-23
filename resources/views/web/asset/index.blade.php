@@ -56,7 +56,7 @@
         function printDiv(element) {
             $(element).find('#logoprint').show();
             
-            var a = window.open('', '', 'height=500, width=500');
+            var a = window.open('', '', '');
             a.document.write('<html><body>');
             a.document.write(element.innerHTML);
             a.document.write('</body></html>');

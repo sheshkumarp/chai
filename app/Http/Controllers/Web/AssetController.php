@@ -360,11 +360,26 @@ class AssetController extends Controller
             $i = 1;
             foreach ($object as $key => $row) 
             {
-                $data[$key]['id'] = '<div onclick="printDiv(this)" style="overflow:nowrap" >
+                $data[$key]['id'] = '<div onclick="printDiv(this)" style="overflow:nowrap;" >
                                         <img id="logoprint" style="width:150px;height:150px;display:none" src="' . url(asset('assets/admin/images/CHAI-Logo.png')) . '" alt="barcode" />&nbsp;&nbsp;&nbsp;
+
                                         <img style="margin-bottom:25px" src="data:image/png;base64,' . DNS1D::getBarcodePNG($row->id, 'C39',5,100) . '" alt="barcode" />
                                     </div>
                                     ';
+
+                // $data[$key]['id'] = '
+                //     <table onclick="printDiv(this)" cellspacing="0" cellpadding="0" style="border: none;"  >
+                //         <tr style="border: none;" >
+                //             <td style="border: none;">
+                //                 <img id="logoprint" style="width:150px;height:150px;display:none" src="' . url(asset('assets/admin/images/CHAI-Logo.png')) . '" alt="barcode" />
+                //             </td style="border: none;" >
+                //             <td>
+                //                 <img style="margin-bottom:25px" src="data:image/png;base64,' . DNS1D::getBarcodePNG($row->id, 'C39',5,100) . '" alt="barcode" />
+                //                 <small style="text-align:left">CHAI-KIN-RDC-FURNITURE-001<small>
+                //             </td>
+                //         </tr>
+                //     </table>
+                // ';
 
                 $data[$key]['team'] = '<span title="' . ucfirst($row->team->title) . '">' . ucfirst($row->team->title). '</span>';
 

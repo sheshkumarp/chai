@@ -15,6 +15,9 @@ use App\Models\AssetModel;
 
 use Rap2hpoutre\FastExcel\FastExcel;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 // plugins
 use Hash;
 use DB;
@@ -231,8 +234,10 @@ public function getRecords(Request $request)
         ------------------------------*/
 
         // start model query
-        $modelQuery =  $this->BaseModel->with('assets')->has('roles', '<', 1);
+        // $modelQuery =  $this->BaseModel->with('assets')->has('roles', '<', 1);
+        $modelQuery =  $this->BaseModel->with('assets')->has('assets');
 
+        // dd($modelQuery->get()->toArray());
 
         
         // get total count 
@@ -294,9 +299,13 @@ public function getRecords(Request $request)
                     <img style="width:35px;height:35px" src="'.url('/assets/admin/images').'/sheet.jpeg" alt=" edit"></a>';
                 }
 
+                $edit = '';
+                if(count($row->roles) == 0) {
 
-                $edit = '<a href="'.route('admin.users.edit', [ base64_encode(base64_encode($row->id))]).'"><img src="'.url('/assets/admin/images').'/icons/edit.svg" alt=" edit"></a>';
+                    $edit = '<a href="'.route('admin.users.edit', [ base64_encode(base64_encode($row->id))]).'"><img src="'.url('/assets/admin/images').'/icons/edit.svg" alt=" edit"></a>';
                
+                }
+
                 $delete = '<a href="javascript:void(0)" onclick="return deleteCollection(this)" data-href="'.route('admin.users.destroy', [base64_encode(base64_encode($row->id))]) .'" ><img src="'.url('/assets/admin/images').'/icons/delete.svg" alt=" delete"></a>';
 
                 if ((int)$row->id === (int)auth()->user()->id) 
@@ -348,35 +357,170 @@ public function getRecords(Request $request)
 
         $id = base64_decode(base64_decode($encID));
 
-        $data = $this->AssetModel->where('fk_user_id', $id)
+        $collections = $this->AssetModel->where('fk_user_id', $id)
                                 ->with(['category', 'team'])
                                 ->orderBy('created_at', 'DESC')
                                 ->get();
 
-        return (new FastExcel($data))->download('assets.csv', function ($object) {
 
-                    return [
-                        'Team'                  => ucfirst($object->team->title),
-                        'Asset Type'            => ucfirst($object->category->name),
-                        'Code Bar ID'           => $object->code_bar_id,
-                        'Equipment Description' => ucfirst($object->equipment_description),
-                        'Acquisition Date'      => date('d/m/Y', strtotime($object->acquisition_date)),
-                        'Acquisition Cost Local'=> number_format($object->acquisition_cost_local, 2),
-                        'Acquisition Cost USD'  => number_format($object->acquisition_cost_usd, 2),
-                        'Purchased With Donor Funds' => $object->purchased_with_donor_funds,
-                        'Project ID'            => $object->project_id,
-                        'In Country Location'   => $object->in_country_location,
-                        'Invoice Number'        => $object->invoice,
-                        'Manufacturer'          => ucfirst($object->manufacturer),
-                        'Model'                 => ucfirst($object->model),
-                        'Inventory Confirmation Date' => date('d/m/Y', strtotime($object->inventory_confirmation_date)),
-                        'Confirmed By'          => ucfirst($object->confirmed_by),
-                        'Serial/Vehicle/Identification/Logbook' => $object->serial_vehicle_identification_logbook,
-                        'Comments'              => ucfirst($object->comments),
-                        'Still With Chai'       => $object->still_with_chai,
-                        'Disposal Date (If NO longer with CHAI)' => date('d/m/Y', strtotime($object->disposal_date))
-                    ];
+        if (!empty($collections) && sizeof($collections) > 0)
+        {
+            $spreadsheet = new Spreadsheet();
+
+            $data = [];
+                
+            $data[] = array('Team',
+                            'Asset Type',
+                            'Code Bar ID',
+                            'Equipment Description',
+                            'Acquisition Date',
+                            'Acquisition Cost (CDR)',
+                            'Acquisition Cost (USD)',
+                            'Purchased With Donor Funds',
+                            'Project ID',
+                            'In Country Location',
+                            'Invoice Number',
+                            'Manufacturer',
+                            'Model',
+                            'Inventory Confirmation Date',
+                            'Confirmed By',
+                            'Serial/Vehicle/Identification/Logbook',
+                            'Comments',
+                            'Still With Chai',
+                            'Disposal Date (If NO longer with CHAI)'
+                        );
             
-                });
+            $data[] = [];
+
+            foreach ($collections as $key => $object) 
+            {
+
+
+                $data[] = array(
+                                ucfirst($object->team->title) ?? '',
+                                ucfirst($object->category->name) ?? '',
+                                $object->code_bar_id ?? '',
+                                ucfirst($object->equipment_description) ?? '',
+                                date('d/m/Y', strtotime($object->acquisition_date)) ?? '',
+                                !empty($object->acquisition_cost_local) ? number_format($object->acquisition_cost_local, 2) : '',
+                                !empty($object->acquisition_cost_usd) ? number_format($object->acquisition_cost_usd, 2) : '',
+                                $object->purchased_with_donor_funds ?? '',
+                                $object->project_id ?? '',
+                                $object->in_country_location ?? '',
+                                $object->invoice,
+                                ucfirst($object->manufacturer),
+                                ucfirst($object->model) ?? '',
+                                date('d/m/Y', strtotime($object->inventory_confirmation_date)) ?? '',
+                                ucfirst($object->confirmed_by) ?? '',
+                                $object->serial_vehicle_identification_logbook ?? '',
+                                ucfirst($object->comments) ?? '',
+                                $object->still_with_chai ?? '',
+                                date('d/m/Y', strtotime($object->disposal_date)) ?? ''
+                            );
+            }
+
+            // set title
+            $sheet = $spreadsheet->getActiveSheet();
+            $sheet->setTitle('Asset table');
+            $sheet->fromArray($data, NULL, 'A1');
+
+            // Set Width and height
+            $sheet->getStyle('A:S')->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A:S')->getAlignment()->setVertical('center');
+            $sheet->getRowDimension('1')->setRowHeight(60, 'px');
+            $sheet->getColumnDimension('A')->setWidth(20);
+            $sheet->getColumnDimension('B')->setWidth(25);
+            $sheet->getColumnDimension('C')->setWidth(35);
+            $sheet->getColumnDimension('D')->setWidth(30);
+            $sheet->getColumnDimension('E')->setWidth(25);
+            $sheet->getColumnDimension('F')->setWidth(35);
+            $sheet->getColumnDimension('G')->setWidth(35);
+            $sheet->getColumnDimension('H')->setWidth(35);
+            $sheet->getColumnDimension('I')->setWidth(20);
+            $sheet->getColumnDimension('J')->setWidth(20);
+            $sheet->getColumnDimension('K')->setWidth(20);
+            $sheet->getColumnDimension('L')->setWidth(20);
+            $sheet->getColumnDimension('M')->setWidth(20);
+            $sheet->getColumnDimension('N')->setWidth(25);
+            $sheet->getColumnDimension('O')->setWidth(20);
+            $sheet->getColumnDimension('P')->setWidth(35);
+            $sheet->getColumnDimension('Q')->setWidth(20);
+            $sheet->getColumnDimension('R')->setWidth(20);
+            $sheet->getColumnDimension('S')->setWidth(35);
+
+            // Set Wrap Text
+            $sheet->getStyle('A1:A'.$sheet->getHighestRow('A'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('B1:B'.$sheet->getHighestRow('B'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('C1:C'.$sheet->getHighestRow('C'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('D1:D'.$sheet->getHighestRow('D'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('E1:E'.$sheet->getHighestRow('E'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('F1:F'.$sheet->getHighestRow('F'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('G1:G'.$sheet->getHighestRow('G'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('H1:H'.$sheet->getHighestRow('H'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('I1:I'.$sheet->getHighestRow('I'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('J1:J'.$sheet->getHighestRow('J'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('K1:K'.$sheet->getHighestRow('K'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('L1:L'.$sheet->getHighestRow('L'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('M1:M'.$sheet->getHighestRow('M'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('N1:N'.$sheet->getHighestRow('N'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('O1:O'.$sheet->getHighestRow('O'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('P1:P'.$sheet->getHighestRow('P'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('Q1:Q'.$sheet->getHighestRow('Q'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('R1:R'.$sheet->getHighestRow('R'))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('S1:S'.$sheet->getHighestRow('S'))->getAlignment()->setWrapText(true);
+
+            // Set font name and bold the font
+            $sheet->getStyle("A1:S1")->getFont()->setName('Calibri')->setBold(true);
+
+           
+            // fill color in cells
+            // $spreadsheet
+            // ->getActiveSheet()
+            // ->getStyle('A1:A1')
+            // ->getFill()
+            // ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            // ->getStartColor()
+            // ->setARGB('lightGray');
+
+
+            // redirect output to client browser
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Assettable.xlsx"');
+            header('Cache-Control: max-age=0');
+
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+        }
+        else
+        {
+            return back();
+        }
+
+
+        // return (new FastExcel($data))->download('assets.csv', function ($object) {
+
+        //             return [
+        //                 'Team'                  => ucfirst($object->team->title),
+        //                 'Asset Type'            => ucfirst($object->category->name),
+        //                 'Code Bar ID'           => $object->code_bar_id,
+        //                 'Equipment Description' => ucfirst($object->equipment_description),
+        //                 'Acquisition Date'      => date('d/m/Y', strtotime($object->acquisition_date)),
+        //                 'Acquisition Cost Local'=> number_format($object->acquisition_cost_local, 2),
+        //                 'Acquisition Cost USD'  => number_format($object->acquisition_cost_usd, 2),
+        //                 'Purchased With Donor Funds' => $object->purchased_with_donor_funds,
+        //                 'Project ID'            => $object->project_id,
+        //                 'In Country Location'   => $object->in_country_location,
+        //                 'Invoice Number'        => $object->invoice,
+        //                 'Manufacturer'          => ucfirst($object->manufacturer),
+        //                 'Model'                 => ucfirst($object->model),
+        //                 'Inventory Confirmation Date' => date('d/m/Y', strtotime($object->inventory_confirmation_date)),
+        //                 'Confirmed By'          => ucfirst($object->confirmed_by),
+        //                 'Serial/Vehicle/Identification/Logbook' => $object->serial_vehicle_identification_logbook,
+        //                 'Comments'              => ucfirst($object->comments),
+        //                 'Still With Chai'       => $object->still_with_chai,
+        //                 'Disposal Date (If NO longer with CHAI)' => date('d/m/Y', strtotime($object->disposal_date))
+        //             ];
+            
+        //         });
     }
 }
