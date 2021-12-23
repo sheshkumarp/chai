@@ -15,5 +15,10 @@ class General
     public function handle($request, Closure $next, $guard = 'web')
     {
         return $next($request);
+
+
+        // deprication warning
+        
+
     }
 }

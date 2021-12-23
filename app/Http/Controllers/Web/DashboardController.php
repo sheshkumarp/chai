@@ -52,6 +52,7 @@ class DashboardController extends Controller
 
     public function index()
     {
+
         $this->ViewData['moduleTitle']  = $this->ModuleTitle;
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
         $this->ViewData['modulePath']   = $this->ModulePath;
@@ -61,6 +62,44 @@ class DashboardController extends Controller
         $this->ViewData['totalCostLocal']   = AssetModel::where('fk_user_id', auth()->user()->id)->sum('acquisition_cost_local');
         $this->ViewData['totalCostUSD']     = AssetModel::where('fk_user_id', auth()->user()->id)->sum('acquisition_cost_usd');
         
+
+        $itequipment    = date('Y-m-d', strtotime('+3 years'));
+        $furniture      = date('Y-m-d', strtotime('+3 years'));
+        $equipment      = date('Y-m-d', strtotime('+5 years'));
+        $vehicle        = date('Y-m-d', strtotime('+5 years'));
+
+
+        // check expired assets and delete
+        AssetModel::where('fk_user_id', auth()->user()->id)
+                    ->where('fk_category_id',2)
+                    ->whereDate('acquisition_date','>',$itequipment)->delete();
+
+        AssetModel::where('fk_user_id', auth()->user()->id)
+                    ->where('fk_category_id',3)
+                    ->whereDate('acquisition_date','>',$furniture)->delete();
+
+        AssetModel::where('fk_user_id', auth()->user()->id)
+                    ->where('fk_category_id',4)
+                    ->whereDate('acquisition_date','>',$equipment)->delete();
+
+        AssetModel::where('fk_user_id', auth()->user()->id)
+                    ->where('fk_category_id',5)
+                    ->whereDate('acquisition_date','>',$vehicle)->delete();
+
+
+        // add logic to check assets are expiring after 3 months 
+        $abouttoexpiredate = date('Y-m-d', strtotime('+3 months'));
+        $currentdate = date('Y-m-d');
+
+
+        $this->ViewData['soonExpire'] = AssetModel::where('fk_user_id', auth()->user()->id)->with('category')
+                                            ->whereDate('acquisition_date','<=',$abouttoexpiredate)
+                                            // ->whereDate('created_at','>=',$currentdate)
+                                            ->orderBy('id','ASC')
+                                            ->first();
+
+                // dd($this->ViewData['soonExpire']);
+
         // self::_getAuthenticationForToken();
         return view($this->ModuleView.'index', $this->ViewData);
     }

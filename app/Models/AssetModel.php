@@ -9,11 +9,16 @@ use App\Models\CategoryModel;
 use App\Models\AssetTypesModel;
 use App\Models\TeamModel;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+
 class AssetModel extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     protected $table = 'user_has_assets';  
+
+    protected $dates = ['deleted_at'];
 
     public function category()
     {

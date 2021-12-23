@@ -379,8 +379,8 @@ class AssetController extends Controller
             }
         }
 
-        // $searchHTML['id'] = '<input  name="id" id="id" value="' . ($request->custom['id'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
-        $searchHTML['id'] = '';
+        $searchHTML['id'] = '<input  name="id" id="id" value="' . ($request->custom['id'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
+        // $searchHTML['id'] = '';
 
         $searchHTML['team'] = '<input  name="team" id="team" value="' . ($request->custom['team'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
 
@@ -435,17 +435,17 @@ class AssetController extends Controller
 
         if(!empty($request->inventory_confirmation_date))
         {
-            $collection->inventory_confirmation_date = Date('Y-m-d', strtotime($request->inventory_confirmation_date));
+            $collection->inventory_confirmation_date = Date('Y-m-d', strtotime(strtr($request->inventory_confirmation_date,'/','-')));
         } 
 
         if(!empty($request->acquisition_date))
         {
-            $collection->acquisition_date   = Date('Y-m-d', strtotime($request->acquisition_date));
+            $collection->acquisition_date   = Date('Y-m-d', strtotime(strtr($request->acquisition_date,'/','-')));
         } 
 
         if(!empty($request->disposal_date))
         {
-            $collection->disposal_date   =  Date('Y-m-d', strtotime($request->disposal_date));
+            $collection->disposal_date   =  Date('Y-m-d', strtotime( strtr($request->disposal_date,'/','-')));
         }
         
         $collection->status = 'active';
