@@ -360,7 +360,11 @@ class AssetController extends Controller
             $i = 1;
             foreach ($object as $key => $row) 
             {
-                $data[$key]['id'] = '<a href="data:image/png;base64,'.DNS1D::getBarcodePNG($row->id, 'C39',3,33).'" target="_blank" download ><img src="data:image/png;base64,' . DNS1D::getBarcodePNG($row->id, 'C39',3,33) . '" alt="barcode" /></a>';
+                $data[$key]['id'] = '<div onclick="printDiv(this)" style="overflow:nowrap" >
+                                        <img id="logoprint" style="width:150px;height:150px;display:none" src="' . url(asset('assets/admin/images/CHAI-Logo.png')) . '" alt="barcode" />&nbsp;&nbsp;&nbsp;
+                                        <img style="margin-bottom:25px" src="data:image/png;base64,' . DNS1D::getBarcodePNG($row->id, 'C39',5,100) . '" alt="barcode" />
+                                    </div>
+                                    ';
 
                 $data[$key]['team'] = '<span title="' . ucfirst($row->team->title) . '">' . ucfirst($row->team->title). '</span>';
 

@@ -52,4 +52,18 @@
 
 @section('scripts')
     <script type="text/javascript" src="{{ url('assets/web/js/asset/index.js') }}"></script>
+    <script type="text/javascript">
+        function printDiv(element) {
+            $(element).find('#logoprint').show();
+            
+            var a = window.open('', '', 'height=500, width=500');
+            a.document.write('<html><body>');
+            a.document.write(element.innerHTML);
+            a.document.write('</body></html>');
+            a.document.close();
+            $(element).find('#logoprint').hide();
+            a.print();
+
+        }
+    </script>
 @endsection
