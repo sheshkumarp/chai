@@ -294,7 +294,7 @@ class AssetController extends Controller
                 $key = $request->custom['id'];
                 $custom_search = true;
                 $modelQuery = $modelQuery
-                ->where('id', 'LIKE', '%' . $key . '%');
+                ->where('code_bar_id', 'LIKE', '%' . $key . '%');
             }
 
             if (!empty($request->custom['team'])) 
@@ -319,13 +319,13 @@ class AssetController extends Controller
                 });
             }
 
-            if (isset($request->custom['invoice'])) 
-            {
-                $key = $request->custom['invoice'];
-                $custom_search = true;
-                $modelQuery = $modelQuery
-                ->where('invoice', 'LIKE', '%' . $key . '%');
-            }
+            // if (isset($request->custom['invoice'])) 
+            // {
+            //     $key = $request->custom['invoice'];
+            //     $custom_search = true;
+            //     $modelQuery = $modelQuery
+            //     ->where('invoice', 'LIKE', '%' . $key . '%');
+            // }
 
             if (isset($request->custom['equipment_description'])) 
             {
@@ -360,10 +360,10 @@ class AssetController extends Controller
             $i = 1;
             foreach ($object as $key => $row) 
             {
-                $data[$key]['id'] = '<div onclick="printDiv(this)" style="overflow:nowrap;" >
+                $data[$key]['id'] = '<div onclick="printDiv(this)" >
                                         <img id="logoprint" style="width:150px;height:150px;display:none" src="' . url(asset('assets/admin/images/CHAI-Logo.png')) . '" alt="barcode" />&nbsp;&nbsp;&nbsp;
 
-                                        <img style="margin-bottom:25px" src="data:image/png;base64,' . DNS1D::getBarcodePNG($row->id, 'C39',5,100) . '" alt="barcode" />
+                                        <img style="margin-bottom:25px" src="data:image/png;base64,' . DNS1D::getBarcodePNG($row->code_bar_id, 'C39',0.7,100) . '" alt="barcode" />
                                     </div>
                                     ';
 
@@ -387,7 +387,7 @@ class AssetController extends Controller
                 
                 $data[$key]['equipment_description'] = '<span title="' . ucfirst($row->equipment_description) . '">' . ucfirst($row->equipment_description). '</span>';
 
-                $data[$key]['invoice'] = '<span title="' . ucfirst($row->invoice) . '">' . ucfirst($row->invoice). '</span>';
+                // $data[$key]['invoice'] = '<span title="' . ucfirst($row->invoice) . '">' . ucfirst($row->invoice). '</span>';
 
 
                 $show = '<a href="' . route('web.asset.show', [base64_encode(base64_encode($row->id))]) . '"><img src="' . url('/assets/admin/images') . '/icons/eye.svg" alt=" edit"></a>';
@@ -407,7 +407,7 @@ class AssetController extends Controller
 
         $searchHTML['equipment_description'] = '<input  name="equipment_description" id="equipment_description" value="' . ($request->custom['equipment_description'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
 
-        $searchHTML['invoice'] = '<input  name="invoice" id="invoice" value="' . ($request->custom['invoice'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
+        // $searchHTML['invoice'] = '<input  name="invoice" id="invoice" value="' . ($request->custom['invoice'] ?? '') . '" type="text" class="form-control break-word" placeholder="Search...">';
 
       
         if ($custom_search) 
@@ -437,7 +437,7 @@ class AssetController extends Controller
         $collection->fk_team_id             = $request->fk_team_id;
         $collection->fa_type                = $request->fa_type ?? '';
         $collection->fk_category_id         = $request->fk_category_id ?? '';
-        $collection->code_bar_id            = $request->code_bar_id ?? '';
+        
         $collection->equipment_description  = $request->equipment_description ?? '';
         $collection->acquisition_cost_local = $request->acquisition_cost_local ?? '';
         $collection->acquisition_cost_usd   = $request->acquisition_cost_usd ?? '';
@@ -470,6 +470,16 @@ class AssetController extends Controller
         $collection->status = 'active';
 
         $collection->save();
+
+        // get Category 
+        $category = AssetTypesModel::where('id',$collection->fk_category_id)->first();
+        
+        $barcodeId = 'CHAI-KIN-RDC-'.strtoupper(\Str::slug($category->name)).'-0'.$collection->id;
+
+        $collection->code_bar_id  = $barcodeId ?? '';
+
+        $collection->save();
+
 
         /*document upload*/
         if ($request->has('invoice_document')) 

@@ -128,7 +128,7 @@
                     <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Acquisition Cost Local</label>
+                            <label class="theme-blue">Acquisition Cost (CDF)</label>
                             <input class="form-control" oninput="getUsd(this)" type="text" name="acquisition_cost_local" value="{{ $object->acquisition_cost_local }}">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
@@ -138,7 +138,7 @@
                         </div>
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Acquisition Cost USD</label>
+                            <label class="theme-blue">Acquisition Cost (USD)</label>
                             <input class="form-control" type="text" name="acquisition_cost_usd" id="acquisition_cost_usd" value="{{ $object->acquisition_cost_usd }}">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">

@@ -21,7 +21,7 @@ $(document).ready(function ()
             "team": $('#team').val(),
             "asset_type": $('#asset_type').val(),
             "equipment_description": $('#equipment_description').val(),
-            "invoice": $('#invoice').val(),
+            // "invoice": $('#invoice').val(),
           }
         }
       },
@@ -30,11 +30,11 @@ $(document).ready(function ()
         { "data": "team" },
         { "data": "asset_type" },
         { "data": "equipment_description" },
-        { "data": "invoice" },
+        // { "data": "invoice" },
         { "data": "actions" }
       ],
 
-      "aoColumnDefs": [{ "bSortable": false, "aTargets": [0,1,2,3,4,5] }],
+      "aoColumnDefs": [{ "bSortable": false, "aTargets": [0,1,2,3,4] }],
       "lengthMenu": [[20, 20, 50, 100, 500], [20, 25, 50, 100, 500]],
       "aaSorting": [[0, 'DESC']],
       "language": {
@@ -67,7 +67,7 @@ $(document).ready(function ()
 
     // for users module only || add custome class for tr
     wrapper.find('tbody tr').each(function () {
-      $(this).find('td:nth-child(6)').css("text-align", "center");;
+      $(this).find('td:nth-child(5)').css("text-align", "center");
       
     })
 
@@ -101,7 +101,7 @@ function removeSearch(element) {
   $('#team').val('');
   $('#asset_type').val('');
   $('#equipment_description').val('');
-  $('#invoice').val('');
+  // $('#invoice').val('');
   $('#listingTable').DataTable().draw();
 }
 

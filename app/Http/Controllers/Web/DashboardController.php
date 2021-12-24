@@ -94,7 +94,7 @@ class DashboardController extends Controller
 
         $this->ViewData['soonExpire'] = AssetModel::where('fk_user_id', auth()->user()->id)->with('category')
                                             ->whereDate('acquisition_date','<=',$abouttoexpiredate)
-                                            // ->whereDate('created_at','>=',$currentdate)
+                                            ->whereDate('acquisition_date','>=',$currentdate)
                                             ->orderBy('id','ASC')
                                             ->first();
 

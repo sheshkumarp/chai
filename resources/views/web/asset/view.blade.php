@@ -93,7 +93,7 @@
                     <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Acquisition Cost Local</label> : 
+                            <label class="theme-blue">Acquisition Cost (CDF)</label> : 
                             <span style="font-weight: bold; font-size: 16px;">  {{ !empty($object->acquisition_cost_local) ? $object->acquisition_cost_local : '---' }} </span>
                         </div>
 

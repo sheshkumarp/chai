@@ -374,7 +374,7 @@ public function getRecords(Request $request)
                             'Code Bar ID',
                             'Equipment Description',
                             'Acquisition Date',
-                            'Acquisition Cost (CDR)',
+                            'Acquisition Cost (CDF)',
                             'Acquisition Cost (USD)',
                             'Purchased With Donor Funds',
                             'Project ID',
