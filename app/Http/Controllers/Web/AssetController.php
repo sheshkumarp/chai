@@ -363,7 +363,8 @@ class AssetController extends Controller
                 $data[$key]['id'] = '<div onclick="printDiv(this)" >
                                         <img id="logoprint" style="width:150px;height:150px;display:none" src="' . url(asset('assets/admin/images/CHAI-Logo.png')) . '" alt="barcode" />&nbsp;&nbsp;&nbsp;
 
-                                        <img style="margin-bottom:25px" src="data:image/png;base64,' . DNS1D::getBarcodePNG($row->code_bar_id, 'C39',0.7,100) . '" alt="barcode" />
+                                        <img style="margin-bottom:25px" src="data:image/png;base64,' . DNS1D::getBarcodePNG((string)$row->code_bar_id, 'C39',1,100) . '" alt="barcode" />
+
                                     </div>
                                     ';
 
@@ -454,17 +455,23 @@ class AssetController extends Controller
 
         if(!empty($request->inventory_confirmation_date))
         {
-            $collection->inventory_confirmation_date = Date('Y-m-d', strtotime(strtr($request->inventory_confirmation_date,'/','-')));
+            $inventory_confirmation_date = date_create_from_format('m/d/Y',$request->inventory_confirmation_date);
+            $inventory_confirmation_date = date_format($inventory_confirmation_date,"Y-m-d");
+            $collection->inventory_confirmation_date   = Date('Y-m-d', strtotime($inventory_confirmation_date));
         } 
 
         if(!empty($request->acquisition_date))
         {
-            $collection->acquisition_date   = Date('Y-m-d', strtotime(strtr($request->acquisition_date,'/','-')));
+            $acquisition_date = date_create_from_format('m/d/Y',$request->acquisition_date);
+            $acquisition_date = date_format($acquisition_date,"Y-m-d");
+            $collection->acquisition_date   = Date('Y-m-d', strtotime($acquisition_date));
         } 
 
         if(!empty($request->disposal_date))
         {
-            $collection->disposal_date   =  Date('Y-m-d', strtotime( strtr($request->disposal_date,'/','-')));
+            $disposal_date = date_create_from_format('m/d/Y',$request->disposal_date);
+            $disposal_date = date_format($disposal_date,"Y-m-d");
+            $collection->disposal_date   = Date('Y-m-d', strtotime($disposal_date));            
         }
         
         $collection->status = 'active';

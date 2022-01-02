@@ -82,7 +82,7 @@
                             <label class="theme-blue">Acquisition Date </label> :
                             <span style="font-weight: bold; font-size: 16px;"> 
                                 @if(!empty($object->acquisition_date))
-                                    {{ date('d/m/Y', strtotime($object->acquisition_date)) }}
+                                    {{ date('m/d/Y', strtotime($object->acquisition_date)) }}
                                 @else
                                     --- 
                                 @endif
@@ -189,7 +189,7 @@
                             <label class="theme-blue">Inventory Confirmation Date </label>
                             <span style="font-weight: bold; font-size: 16px;"> 
                                 @if(!empty($object->inventory_confirmation_date))
-                                    {{ date('d/m/Y', strtotime($object->inventory_confirmation_date)) }}
+                                    {{ date('m/d/Y', strtotime($object->inventory_confirmation_date)) }}
                                 @else
                                     ---
                                 @endif
@@ -250,7 +250,7 @@
                             <label class="theme-blue">Disposal Date (If NO longer with CHAI)</label> : 
                             <span style="font-weight: bold; font-size: 16px;"> 
                                 @if(!empty($object->disposal_date))
-                                value="{{ date('d/m/Y', strtotime($object->disposal_date)) }}" 
+                                value="{{ date('m/d/Y', strtotime($object->disposal_date)) }}" 
                                 @else
                                     ---
                                 @endif

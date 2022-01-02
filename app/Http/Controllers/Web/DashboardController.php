@@ -23,6 +23,8 @@ use AmrShawky\Currency;
 
 use Auth;
 
+use DB;
+
 
 
 // use Spatie\Permission\Models\Role;
@@ -63,42 +65,47 @@ class DashboardController extends Controller
         $this->ViewData['totalCostUSD']     = AssetModel::where('fk_user_id', auth()->user()->id)->sum('acquisition_cost_usd');
         
 
-        $itequipment    = date('Y-m-d', strtotime('+3 years'));
-        $furniture      = date('Y-m-d', strtotime('+3 years'));
-        $equipment      = date('Y-m-d', strtotime('+5 years'));
-        $vehicle        = date('Y-m-d', strtotime('+5 years'));
-
+       $currentDate      = date('Y-m-d');
 
         // check expired assets and delete
         AssetModel::where('fk_user_id', auth()->user()->id)
-                    ->where('fk_category_id',2)
-                    ->whereDate('acquisition_date','>',$itequipment)->delete();
+                    ->whereIn('fk_category_id',[2,3])
+                    ->where(DB::raw('DATE_ADD(DATE(acquisition_date), INTERVAL 3 YEAR)'),'>',$currentDate)
+                    ->whereDate('acquisition_date','>',$currentDate)->delete();
+
 
         AssetModel::where('fk_user_id', auth()->user()->id)
-                    ->where('fk_category_id',3)
-                    ->whereDate('acquisition_date','>',$furniture)->delete();
-
-        AssetModel::where('fk_user_id', auth()->user()->id)
-                    ->where('fk_category_id',4)
-                    ->whereDate('acquisition_date','>',$equipment)->delete();
-
-        AssetModel::where('fk_user_id', auth()->user()->id)
-                    ->where('fk_category_id',5)
-                    ->whereDate('acquisition_date','>',$vehicle)->delete();
+                    ->where(DB::raw('DATE_ADD(DATE(acquisition_date), INTERVAL 5 YEAR)'),'>',$currentDate)
+                    ->whereIn('fk_category_id',[2,3])
+                    ->whereDate('acquisition_date','>',$currentDate)->delete();
 
 
-        // add logic to check assets are expiring after 3 months 
-        $abouttoexpiredate = date('Y-m-d', strtotime('+3 months'));
-        $currentdate = date('Y-m-d');
+        $this->ViewData['soonExpire'] = null;
 
 
-        $this->ViewData['soonExpire'] = AssetModel::where('fk_user_id', auth()->user()->id)->with('category')
-                                            ->whereDate('acquisition_date','<=',$abouttoexpiredate)
-                                            ->whereDate('acquisition_date','>=',$currentdate)
+        $soonExpire1 = AssetModel::where('fk_user_id', auth()->user()->id)->with('category')
+                                            ->where(DB::raw('DATE_SUB( DATE_ADD(DATE(acquisition_date), INTERVAL 3 YEAR), INTERVAL -3 MONTH )'),'>',$currentDate)
+                                            ->whereIn('fk_category_id',[2,3])
                                             ->orderBy('id','ASC')
                                             ->first();
 
-                // dd($this->ViewData['soonExpire']);
+        if(!empty($soonExpire1))
+        {
+
+            $this->ViewData['soonExpire'] = $soonExpire1;
+        }
+
+        $soonExpire2 = AssetModel::where('fk_user_id', auth()->user()->id)->with('category')
+                                            ->where(DB::raw('DATE_SUB( DATE_ADD(DATE(acquisition_date), INTERVAL 5 YEAR), INTERVAL -3 MONTH )'),'>',$currentDate)
+                                            ->whereIn('fk_category_id',[4,5])
+                                            ->orderBy('id','ASC')
+                                            ->first();
+
+        if(!empty($soonExpire2))
+        {
+
+            $this->ViewData['soonExpire'] = $soonExpire2;
+        }
 
         // self::_getAuthenticationForToken();
         return view($this->ModuleView.'index', $this->ViewData);

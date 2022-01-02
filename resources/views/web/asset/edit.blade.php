@@ -114,7 +114,7 @@
                             <label class="theme-blue">Acquisition Date <span class="red"> *</span></label>
                             <input class="form-control" type="text"  name="acquisition_date" id="acquisition_date" 
                             @if(!empty($object->acquisition_date))
-                            value="{{ date('d/m/Y', strtotime($object->acquisition_date)) }}" 
+                            value="{{ date('m/d/Y', strtotime($object->acquisition_date)) }}" 
                             @endif
                             required data-error="Acquisition Date field is required">
                             <span class="help-block with-errors">
@@ -262,7 +262,7 @@
                             <label class="theme-blue">Inventory Confirmation Date </label>
                             <input class="form-control" type="text"  name="inventory_confirmation_date" 
                             @if(!empty($object->inventory_confirmation_date))
-                            value="{{ date('d/m/Y', strtotime($object->inventory_confirmation_date)) }}" 
+                            value="{{ date('m/d/Y', strtotime($object->inventory_confirmation_date)) }}" 
                             @endif
                             id="inventory_confirmation_date" >
                             <span class="help-block with-errors">
@@ -347,7 +347,7 @@
                             <label class="theme-blue">Disposal Date (If NO longer with CHAI)</label>
                             <input class="form-control" type="text"  name="disposal_date" id="disposal_date" 
                             @if(!empty($object->disposal_date))
-                            value="{{ date('d/m/Y', strtotime($object->disposal_date)) }}" 
+                            value="{{ date('m/d/Y', strtotime($object->disposal_date)) }}" 
                             @endif
                             >
                             <span class="help-block with-errors">
