@@ -9,9 +9,14 @@
 @endsection
 
 @section('content')
+
     <div class="d-flex pb-5">
     <div class="login-wrapper">
         <div class="card border-0 shadow">
+
+            <center>
+                <img style="width: 300px;margin-top:20px;padding-top: 20px;height: 160px;" src="{{ asset('assets/admin/images/CHAI-Logo.png') }}" >
+            </center>
 
             <h1 class="title blue-border-bottom">
                 {{ 'Admin Log in' }}

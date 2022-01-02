@@ -63,7 +63,7 @@
                             <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
                             
                             <div class="title">
-                                <h3>Total Asset Cost (CDR)</h3>
+                                <h3>Total Asset Cost (CDF)</h3>
                             </div>
                             
                             <div class="text">
