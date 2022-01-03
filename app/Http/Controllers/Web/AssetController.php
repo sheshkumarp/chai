@@ -191,13 +191,13 @@ class AssetController extends Controller
         $collection = $this->BaseModel->find($id);
 
         // check movement history
-        if ($collection->in_country_location != $request->in_country_location) {
+        if ($collection->asset_location != $request->asset_location) {
             
             $UserHasMovementHistoryModel = new $this->UserHasMovementHistoryModel;
             $UserHasMovementHistoryModel->fk_user_id    = auth()->user()->id;
             $UserHasMovementHistoryModel->fk_asset_id   = $id;
-            $UserHasMovementHistoryModel->moved_from    = $collection->in_country_location ?? 'NA';
-            $UserHasMovementHistoryModel->moved_to      = $request->in_country_location ?? 'NA';
+            $UserHasMovementHistoryModel->moved_from    = $collection->asset_location ?? 'NA';
+            $UserHasMovementHistoryModel->moved_to      = $request->asset_location ?? 'NA';
             $UserHasMovementHistoryModel->save();
         }
 
@@ -452,6 +452,7 @@ class AssetController extends Controller
         $collection->serial_vehicle_identification_logbook = $request->serial_vehicle_identification_logbook ?? '';
         $collection->comments               = $request->comments ?? '';
         $collection->still_with_chai        = $request->still_with_chai ?? '';
+        $collection->asset_location        = $request->asset_location ?? '';
 
         if(!empty($request->inventory_confirmation_date))
         {

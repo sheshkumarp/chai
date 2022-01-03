@@ -129,18 +129,23 @@
                                 @endif
                             </span>
                         </div>
-                    </div>
-                                        
-                    <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">Project ID</label> : 
                             <span style="font-weight: bold; font-size: 16px;">  {{ !empty($object->project_id) ? $object->project_id : '---' }} </span>
                         </div>
+                    </div>
+                                        
+                    <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">In Country Location</label>: 
                             <span style="font-weight: bold; font-size: 16px;">  {{ !empty($object->in_country_location) ? $object->in_country_location : '---' }} </span>
+                        </div>
+
+                        <div class="f-col-6 form-group">
+                            <label class="theme-blue">Asset Location</label>: 
+                            <span style="font-weight: bold; font-size: 16px;">  {{ !empty($object->asset_location) ? $object->asset_location : '---' }} </span>
                         </div>
 
                     </div>
@@ -205,12 +210,12 @@
                     <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Asset Location</label>: 
+                            <label class="theme-blue">Model</label>: 
                             <span style="font-weight: bold; font-size: 16px;">  {{ !empty($object->model) ?  $object->model : '---' }} </span>
                         </div>
 
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Shift to </label>:  
+                            <label class="theme-blue">Serial/Vehicle/Identification/Logbook</label>:  
                             <span style="font-weight: bold; font-size: 16px;">  {{ !empty($object->serial_vehicle_identification_logbook) ?  $object->serial_vehicle_identification_logbook : '---'  }} </span>
                         </div>
                     </div>

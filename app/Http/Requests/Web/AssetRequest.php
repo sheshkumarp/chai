@@ -22,6 +22,7 @@ class AssetRequest extends FormRequest
             
             'fk_category_id'            => 'required',
             'equipment_description'     => 'required',
+            'asset_location'            => 'required',
 
             'acquisition_date'          => 'required',
             

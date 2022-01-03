@@ -118,7 +118,7 @@
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">Acquisition Cost (CDF)</label>
-                            <input oninput="getUsd(this)" class="form-control" type="text" name="acquisition_cost_local">
+                            <input oninput="getUsd(this)" class="form-control" type="text" id="acquisition_cost_local" name="acquisition_cost_local" >
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
                                     <li class="err_acquisition_cost_local"></li>
@@ -128,7 +128,7 @@
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">Acquisition Cost (USD)</label>
-                            <input class="form-control" type="text" id="acquisition_cost_usd" name="acquisition_cost_usd">
+                            <input class="form-control" oninput="getCDF(this)" type="text" id="acquisition_cost_usd" name="acquisition_cost_usd">
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
                                     <li class="err_acquisition_cost_usd"></li>
@@ -164,9 +164,6 @@
                                 </ul>
                             </span>
                         </div>
-                    </div>
-                                        
-                    <div class="f-row mb-25">
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">Project ID</label>
@@ -177,6 +174,11 @@
                                 </ul>
                             </span>
                         </div>
+                    </div>
+                                        
+                    <div class="f-row mb-25">
+
+                        
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">In Country Location</label>
@@ -184,6 +186,17 @@
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
                                     <li class="err_in_country_location"></li>
+                                </ul>
+                            </span>
+                        </div>
+
+
+                        <div class="f-col-6 form-group">
+                            <label class="theme-blue">Asset Location <span class="red"> *</span></label>
+                            <input class="form-control" type="text" name="asset_location" >
+                            <span class="help-block with-errors">
+                                <ul class="list-unstyled">
+                                    <li class="err_asset_location"></li>
                                 </ul>
                             </span>
                         </div>

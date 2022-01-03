@@ -155,6 +155,8 @@ function getUsd(element)
 {
     var currency = parseFloat($(element).val());
 
+    $("#acquisition_cost_usd").val(0);
+
     $('.err_acquisition_cost_local').closest('div').removeClass('has-error has-danger');
     $('.err_acquisition_cost_local').html('');
 
@@ -183,6 +185,9 @@ function getUsd(element)
         }
     }
 
+
+    
+
     // $('.err_acquisition_cost_local').closest('div').removeClass('has-error has-danger');
     // $('.err_acquisition_cost_local').html('');
 
@@ -207,4 +212,44 @@ function getUsd(element)
     //         }
     //     });
     // }
+}
+
+
+function getCDF(element)
+{
+    var currency = parseFloat($(element).val());
+
+    $("#acquisition_cost_local").val(0);     
+
+
+    $('.err_acquisition_cost_usd').closest('div').removeClass('has-error has-danger');
+    $('.err_acquisition_cost_usd').html('');
+
+    if (isNaN(currency)) 
+    {
+        $('.err_acquisition_cost_usd').closest('div').addClass('has-error has-danger');
+        $('.err_acquisition_cost_usd').html('Please enter valid number');
+    }
+    else
+    {
+
+        var requestURL = 'https://api.exchangerate-api.com/v4/latest/CDF';
+        var request = new XMLHttpRequest();
+        request.open('GET', requestURL);
+        request.responseType = 'json';
+        request.send();
+
+        request.onload = function() {
+
+
+            let USD = request.response.rates.USD;
+
+            let converted = currency/USD;
+
+            console.log(converted);
+
+
+            $("#acquisition_cost_local").val((converted).toFixed(2));     
+        }
+    }
 }
