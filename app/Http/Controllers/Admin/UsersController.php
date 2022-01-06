@@ -235,7 +235,7 @@ public function getRecords(Request $request)
 
         // start model query
         // $modelQuery =  $this->BaseModel->with('assets')->has('roles', '<', 1);
-        $modelQuery =  $this->BaseModel->with('assets')->has('assets');
+        $modelQuery =  $this->BaseModel->with('assets');
 
         // dd($modelQuery->get()->toArray());
 
