@@ -35,9 +35,9 @@
 
                     <div class="f-row mb-25">
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Teams <span class="red"> *</span></label>
-                            <select class="form-control my-select" name="fk_team_id" id="fk_team_id" required data-error="Please select team" >
-                                <option value="">Select Team</option>
+                            <label class="theme-blue">Zone Or Region <span class="red"> *</span></label>
+                            <select class="form-control my-select" name="fk_team_id" id="fk_team_id" required data-error="Please select Zone" >
+                                <option value="">Select Zone</option>
                                 @if(!empty($teams) && count($teams)> 0)
                                 @foreach($teams as $t)
                                 <option value="{{ $t->id }}">{{ ucfirst($t->title) }}</option>
@@ -193,7 +193,14 @@
 
                         <div class="f-col-6 form-group">
                             <label class="theme-blue">Asset Location <span class="red"> *</span></label>
-                            <input class="form-control" type="text" name="asset_location" >
+                            <select class="form-control my-select" name="asset_location" id="asset_location" required data-error="Please select asset location" >
+                                <option value="">Select Asset location</option>
+                                @if(!empty($location) && count($location)> 0)
+                                @foreach($location as $t)
+                                <option value="{{ $t->title }}">{{ ucfirst($t->title) }}</option>
+                                @endforeach
+                                @endif
+                            </select>
                             <span class="help-block with-errors">
                                 <ul class="list-unstyled">
                                     <li class="err_asset_location"></li>

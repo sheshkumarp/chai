@@ -6,7 +6,7 @@
             <button type="button" class="close opacity-1" data-dismiss="modal">
             <img src="{{ url('/assets/admin/images') }}/icons/model_close.svg" alt="close">
             </button>
-            <h4 class="modal-title">Update Team</h4>
+            <h4 class="modal-title">Update Zone Or Region</h4>
          </div>
          <form id="teamFormUpdate" action="" data-toggle="validator" role="form">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -17,7 +17,7 @@
                      <label class="theme-blue">TItle<span
                         class="required">*</span></label>
                      <input class="form-control" type="text" name="title" required
-                        data-error="Team name field is required">
+                        data-error="Zone name field is required">
                      <span class="help-block with-errors">
                         <ul class="list-unstyled">
                            <li class="err_first_name"></li>

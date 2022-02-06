@@ -6,7 +6,7 @@
             <button type="button" class="close opacity-1" data-dismiss="modal">
             <img src="{{ url('/assets/admin/images') }}/icons/model_close.svg" alt="close">
             </button>
-            <h4 class="modal-title">Add Team</h4>
+            <h4 class="modal-title">Add Zone Or Region</h4>
          </div>
          <form id="teamForm" action="{{ route('admin.teams.store') }}" data-toggle="validator" role="form">
             <div class="modal-body border-0">
@@ -15,7 +15,7 @@
                      <label class="theme-blue">TItle<span
                         class="required">*</span></label>
                      <input class="form-control" type="text" name="title" required
-                        data-error="Team name field is required">
+                        data-error="Zone name field is required">
                      <span class="help-block with-errors">
                         <ul class="list-unstyled">
                            <li class="err_first_name"></li>

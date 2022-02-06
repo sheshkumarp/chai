@@ -30,7 +30,7 @@
 
                     <div class="f-row mb-25">
                         <div class="f-col-6 form-group">
-                            <label class="theme-blue">Teams </label> :
+                            <label class="theme-blue">Zone Or Region </label> :
                             <span style="font-weight: bold; font-size: 16px;"> 
                             @if(!empty($teams) && count($teams)> 0)
                                 @foreach($teams as $t)

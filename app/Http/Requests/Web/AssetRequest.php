@@ -55,7 +55,8 @@ class AssetRequest extends FormRequest
         return [
 
             'acquisition_cost_local.regex'      => 'Please enter valid price.',
-            'acquisition_cost_usd.regex'       => 'Please enter valid price.',
+            'acquisition_cost_usd.regex'        => 'Please enter valid price.',
+            'fk_team_id.required'               => 'Please select Zone.',
 
            
         ];

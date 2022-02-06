@@ -12,11 +12,11 @@
         <div class="col-xs-12 bundle width-auto-1-column-140">
             <div class="card border-0 shadow">
                 <h1 class="title blue-border-bottom">
-                    {{ strtoupper($moduleTitle) ?? 'MANAGE TEAMS' }}
+                    {{ strtoupper($moduleTitle) ?? 'MANAGE Zone Or Region' }}
                 </h1>
                 <div class="card-footer d-flex theme-bg-blue-light blue-border-bottom">
                     @can('manage-teams')
-                    <a href="#" class="blue-btn ml-auto" data-toggle="modal" data-target="#addTeam" onclick="document.getElementById('teamForm').reset()" >Add Team</a>
+                    <a href="#" class="blue-btn ml-auto" data-toggle="modal" data-target="#addTeam" onclick="document.getElementById('teamForm').reset()" >Add Zone Or Region</a>
                     @endcan
                 </div>
                 <table id="teamListingTable" class="table last-border-none mb-0 even-odd-row no-border-right vertical-align-middle" style="width:100%" >

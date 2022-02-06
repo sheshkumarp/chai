@@ -64,7 +64,7 @@
                         <h4 class="panel-title w-100">
                               <span class="sidebar-icon">
                                     <img src="{{ asset('assets/admin/images/icons/sidebar/svg/Users.svg') }}">
-                              </span>Teams</h4>
+                              </span>Zone Or Region</h4>
                   </a>
             </div>
             <div id="collapse112"
@@ -74,12 +74,12 @@
                         <ul class="sub-menu clear">
                               @can('manage-teams-access')
                                     <li>
-                                          <a href="{{ route('admin.teams.index') }}">Manage Teams</a>
+                                          <a href="{{ route('admin.teams.index') }}">Manage Zone</a>
                                     </li>
                                     @can('manage-teams')
                                     <li>
                                           <a href="#" data-toggle="modal" data-target="#addTeam"
-                                                onclick="document.getElementById('teamForm').reset()">Add New Team</a>
+                                                onclick="document.getElementById('teamForm').reset()">Add New Zone</a>
                                     </li>
                                     @endcan
                               @endcan

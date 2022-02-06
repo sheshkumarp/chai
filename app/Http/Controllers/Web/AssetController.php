@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\AssetRequest;
 
 use App\Models\AssetModel;
+use App\Models\AssetLocationModel;
 use App\Models\AssetHasImagesModel;
 use App\Models\TeamModel;
 use App\Models\CategoryModel;
@@ -37,6 +38,7 @@ class AssetController extends Controller
     public function __construct(
         
         AssetModel $AssetModel,
+        AssetLocationModel $AssetLocationModel,
         UserModel $UserModel,
         TeamModel $TeamModel,
         CategoryModel $CategoryModel,
@@ -47,6 +49,7 @@ class AssetController extends Controller
     ) {
 
         $this->BaseModel     = $AssetModel;
+        $this->AssetLocationModel = $AssetLocationModel;
         $this->UserModel     = $UserModel;
         $this->TeamModel     = $TeamModel;
         $this->CategoryModel = $CategoryModel;
@@ -83,7 +86,9 @@ class AssetController extends Controller
         // All 
         $this->ViewData['teams']        = $this->TeamModel->get();
         $this->ViewData['categories']   = $this->CategoryModel->get();
-        $this->ViewData['assetTypes']       = $this->AssetTypesModel->get();
+        $this->ViewData['assetTypes']   = $this->AssetTypesModel->get();
+        $this->ViewData['location']     = $this->AssetLocationModel->orderBy('title', 'ASC')->get();
+
 
         // path 
         $this->ViewData['moduleUploadFiles']    = $this->ModulePath.'uploadfiles';
@@ -170,6 +175,8 @@ class AssetController extends Controller
         $this->ViewData['categories']   = $this->CategoryModel->get();
         $this->ViewData['assetTypes']   = $this->AssetTypesModel->get();
         $this->ViewData['object']       = $this->BaseModel->find($id);
+        $this->ViewData['location']     = $this->AssetLocationModel->orderBy('title', 'ASC')->get();
+        
 
         // path 
         $this->ViewData['moduleUploadFiles']    = $this->ModulePath.'uploadfiles';
@@ -433,7 +440,6 @@ class AssetController extends Controller
 
     public function _storeOrUpdate($collection, $request)
     {
-
         $collection->fk_user_id             = auth()->user()->id;
         $collection->fk_team_id             = $request->fk_team_id;
         $collection->fa_type                = $request->fa_type ?? '';
@@ -482,10 +488,13 @@ class AssetController extends Controller
         // get Category 
         $category = AssetTypesModel::where('id',$collection->fk_category_id)->first();
         
-        $barcodeId = 'CHAI-KIN-RDC-'.strtoupper(\Str::slug($category->name)).'-0'.$collection->id;
+        // get team (zone)
+        $zone = TeamModel::where('id',$collection->fk_team_id)->first();
 
+
+        // generate barcode 
+        $barcodeId = 'CHAI-'.strtoupper($zone->title).'-'.strtoupper($category->slug).'-'.strtoupper($collection->asset_location).'-'.$collection->id;
         $collection->code_bar_id  = $barcodeId ?? '';
-
         $collection->save();
 
 

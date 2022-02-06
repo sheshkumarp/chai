@@ -76,7 +76,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="list-group-item d-flex">
-                <a href="#">Teams </a>
+                <a href="#">Zone Or Region </a>
                 <label class="switch ml-auto">
                     <input type="checkbox" class="checkbox-permissions"
                         id="permission-teams" name="teams"
@@ -91,7 +91,7 @@
             <div class="panel-body border-0 py-0">
                 <ul class="list-group toggle-wrapper">
                     <li class="list-group-item d-flex">
-                        <a href="#">Manage Teams </a>
+                        <a href="#">Manage Zone Or Region </a>
                         <label class="switch ml-auto">
                             <input type="checkbox" class="checkbox-permissions" id="permission-manage-teams-access" name="manage-teams-access" value="manage-teams-access" >
                             <span class="knob"></span>

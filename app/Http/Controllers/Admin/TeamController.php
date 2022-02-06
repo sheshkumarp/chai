@@ -27,7 +27,7 @@ class TeamController extends Controller
         $this->ViewData     = [];
         $this->ResultData   = [];
         
-        $this->ModuleTitle = 'Teams';
+        $this->ModuleTitle = 'Zone Or Region';
         $this->ModuleView  = 'admin.teams';
         $this->ModulePath = 'admin.teams.';
 

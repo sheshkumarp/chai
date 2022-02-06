@@ -35,10 +35,9 @@
                 <thead>
                     <tr>
                         <th style="text-align:center;">Asset Code</th>
-                        <th style="text-align:center;">Team</th>
+                        <th style="text-align:center;">Zone Or Region</th>
                         <th style="text-align:center;">Asset Type</th>
                         <th style="text-align:center;">Equipment Description</th>
-                        <!-- <th style="text-align:center;">Invoice</th> -->
                         <th style="text-align:center;">Actions</th>
                     </tr>
                 </thead>
