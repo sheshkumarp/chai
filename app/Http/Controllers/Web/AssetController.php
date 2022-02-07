@@ -389,7 +389,7 @@ class AssetController extends Controller
                 //     </table>
                 // ';
 
-                $data[$key]['team'] = '<span title="' . ucfirst($row->team->title) . '">' . ucfirst($row->team->title). '</span>';
+                $data[$key]['team'] = '<span title="' . ucfirst($row->team->title ?? '') . '">' . ucfirst($row->team->title ?? ''). '</span>';
 
                 $data[$key]['asset_type'] = '<span title="' . ucfirst($row->category->name) . '">' . ucfirst($row->category->name). '</span>';
                 
